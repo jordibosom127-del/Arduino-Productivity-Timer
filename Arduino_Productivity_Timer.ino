@@ -4,11 +4,12 @@
 
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
-const int BUZZER = 8;
-const int LED_20MIN = 9;
-const int LED_40MIN = 10;
-const int LED_60MIN = 11;
-const int BUTTON = 7;
+const byte BUTTON = 7;
+const byte BUZZER = 8;
+const byte LED_20MIN = 9;
+const byte LED_40MIN = 10;
+const byte LED_60MIN = 11;
+
 
 void setup() {
   pinConfig();
@@ -17,49 +18,61 @@ void setup() {
 
   digitalWrite(LED_20MIN, HIGH);
   motivationalMessage("STUDY TIME...");
+  beep();
   delay(2000);
-  digitalWrite(LED_20MIN, LOW);
+
 
   digitalWrite(LED_40MIN, HIGH);
   motivationalMessage("BEGIN NOW!");
+  beep();
   delay(2000);
-  digitalWrite(LED_40MIN, LOW);
 
   digitalWrite(LED_60MIN, HIGH);
   motivationalMessage("YOU CAN DO IT!");
-  delay(2000);
-  digitalWrite(LED_60MIN, LOW);
   beep();
+  delay(2000);
+
+  turnOffLEDs();
   delay(500);
 }
 
 void loop() {
   motivationalMessage("LET'S DO IT!");
   delay(2000);
-
   // 20 MIN
-  timerMessage("20 MIN", "IN PROGRESS");
-  delay(1200000);
+  timerMessage("0-20 MIN", "IN PROGRESS");
+  delay(600000);
+  motivationalMessage("KEEP IT UP!");
+  delay(3000);
+  timerMessage("0-20 MIN", "IN PROGRESS");
+  delay(600000);
   digitalWrite(LED_20MIN, HIGH);
   beep();
-  motivationalMessage("KEEP IT UP!");
   delay(300);
 
   // 40 MIN
-  timerMessage("40 MIN", "IN PROGRESS");
-  delay(1200000);
+  timerMessage("20-40 MIN", "IN PROGRESS");
+  delay(600000);
+  motivationalMessage("COME ON!");
+  delay(3000);
+  timerMessage("20-40 MIN", "IN PROGRESS");
+  delay(600000);
   digitalWrite(LED_40MIN, HIGH);
   beep();
-  motivationalMessage("COME ON!");
   delay(300);
 
   // 60 MIN
-  timerMessage("60 MIN", "IN PROGRESS");
-  delay(1200000);
+  timerMessage("40-60 MIN", "FINAL PUSH!");
+  delay(600000);
+  motivationalMessage("ALMOST DONE!");
+  delay(3000);
+  timerMessage("40-60 MIN", "FINAL PUSH!");
+  delay(600000);
   digitalWrite(LED_60MIN, HIGH);
   beep();
   motivationalMessage("AMAZING JOB!");
-  delay(300);
+  delay(3000);
+
   //DECISION WITH BUTTON
   motivationalMessage("CONTINUE?");
 
@@ -78,6 +91,9 @@ void loop() {
     }
   }
 }
+
+//SYSTEM CONFIG//
+
 void pinConfig() {
   pinMode(BUZZER, OUTPUT);
   pinMode(LED_20MIN, OUTPUT);
